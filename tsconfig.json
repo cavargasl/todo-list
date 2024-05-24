@@ -22,7 +22,8 @@
     "baseUrl": "./",
     "paths": {
       "@/*": ["./src/*"],
-      "@ui/*": ["./src/components/ui/*"]
+      "@ui/*": ["./src/components/ui/*"],
+      "@icons/*": ["./src/components/icons/*"],
     }
   },
   "include": ["src"],
