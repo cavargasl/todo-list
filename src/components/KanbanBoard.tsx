@@ -1,7 +1,7 @@
 import { Task } from "@/types";
 import PlusIcon from "@icons/PlusIcon";
 import Button from "@ui/Button";
-import { useState } from "react";
+import { useId, useState } from "react";
 import ColumnContainer from "./ColumnContainer";
 import Input from "./ui/Input";
 
@@ -9,8 +9,8 @@ function KanbanBoard() {
   const [columns, setColumns] = useState(["To do", "In progress", "Done"]);
   const [addColumn, setAddColumn] = useState(false);
   const [tasks, setTasks] = useState<Task[]>([
-    { name: "Task 1", stage: 0 },
-    { name: "Task 2", stage: 0 },
+    { id: useId(), name: "Task 1", stage: 0 },
+    { id: useId(), name: "Task 2", stage: 0 },
   ]);
 
   return (
