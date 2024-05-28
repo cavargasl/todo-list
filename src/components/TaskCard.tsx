@@ -5,10 +5,10 @@ import TrashIcon from "./icons/TrashIcon";
 import Button from "./ui/Button";
 import CheckBox from "./ui/CheckBox";
 
-export default function TaskCard({ Task: { name } }: { Task: Task }) {
+export default function TaskCard({ Task: { name, completed } }: { Task: Task }) {
   return (
     <article className="bg-background w-full p-2 rounded-md flex gap-2">
-      <CheckBox className="peer" />
+      <CheckBox className="peer" defaultChecked={completed} />
       <p className="w-full peer-checked:line-through">{name}</p>
       <div className="flex gap-1">
         <Button

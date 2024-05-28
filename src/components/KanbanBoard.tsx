@@ -10,7 +10,7 @@ function KanbanBoard() {
   const [addColumn, setAddColumn] = useState(false);
   const [tasks, setTasks] = useState<Task[]>([
     { id: useId(), name: "Task 1", stage: 0, completed: false},
-    { id: useId(), name: "Task 2", stage: 0, completed: false},
+    { id: useId(), name: "Task 2", stage: 0, completed: true},
   ]);
 
   return (
