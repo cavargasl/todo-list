@@ -39,7 +39,7 @@ export default function ColumnContainer({ title, tasks }: Props) {
           <TrashIcon />
         </Button>
       </header>
-      <main className="flex flex-grow flex-col gap-2 py-4">
+      <main className="flex flex-grow flex-col gap-2 py-4 overflow-y-auto overflow-hidden">
         {tasks.map((task) => (
           <TaskCard key={task.name} Task={task} />
         ))}
