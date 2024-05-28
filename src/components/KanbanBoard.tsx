@@ -9,8 +9,8 @@ function KanbanBoard() {
   const [columns, setColumns] = useState(["To do", "In progress", "Done"]);
   const [addColumn, setAddColumn] = useState(false);
   const [tasks, setTasks] = useState<Task[]>([
-    { id: useId(), name: "Task 1", stage: 0 },
-    { id: useId(), name: "Task 2", stage: 0 },
+    { id: useId(), name: "Task 1", stage: 0, completed: false},
+    { id: useId(), name: "Task 2", stage: 0, completed: false},
   ]);
 
   return (
