@@ -3,11 +3,13 @@ import ArrowLeft from "./icons/ArrowLeft";
 import ArrowRight from "./icons/ArrowRight";
 import TrashIcon from "./icons/TrashIcon";
 import Button from "./ui/Button";
+import CheckBox from "./ui/CheckBox";
 
 export default function TaskCard({ Task: { name } }: { Task: Task }) {
   return (
-    <article className="bg-background w-full p-2 rounded-md flex">
-      <p className="w-full mx-2">{name}</p>
+    <article className="bg-background w-full p-2 rounded-md flex gap-2">
+      <CheckBox className="peer" />
+      <p className="w-full peer-checked:line-through">{name}</p>
       <div className="flex gap-1">
         <Button
           variant={"ghost"}
