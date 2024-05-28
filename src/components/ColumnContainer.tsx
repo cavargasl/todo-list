@@ -1,4 +1,6 @@
+import { Task } from "@/types";
 import { useState } from "react";
+import TaskCard from "./TaskCard";
 import PlusIcon from "./icons/PlusIcon";
 import TrashIcon from "./icons/TrashIcon";
 import Button from "./ui/Button";
@@ -6,9 +8,10 @@ import Input from "./ui/Input";
 
 type Props = {
   title: string;
+  tasks: Task[];
 };
 
-export default function ColumnContainer({ title }: Props) {
+export default function ColumnContainer({ title, tasks }: Props) {
   const [editMode, setEditMode] = useState(false);
   const [addItem, setAddItem] = useState(false);
 
@@ -36,12 +39,17 @@ export default function ColumnContainer({ title }: Props) {
           <TrashIcon />
         </Button>
       </header>
-      <main className="flex flex-grow"></main>
+      <main className="flex flex-grow flex-col gap-2 py-4">
+        {tasks.map((task) => (
+          <TaskCard key={task.name} Task={task} />
+        ))}
+      </main>
       <footer>
         {addItem ? (
           <Input
             className="h-[40px] p-2 font-semibold"
             type="text"
+            placeholder="Enter item"
             onBlur={() => setAddItem(false)}
             onKeyDown={(e) => e.key === "Enter" && setAddItem(false)}
             autoFocus
