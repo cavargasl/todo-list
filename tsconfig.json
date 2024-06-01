@@ -24,8 +24,9 @@
       "@/*": ["./src/*"],
       "@ui/*": ["./src/components/ui/*"],
       "@icons/*": ["./src/components/icons/*"],
-    }
+    },
+    "types": ["vitest/globals"],
   },
-  "include": ["src"],
+  "include": ["src", "./src/setupTest.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

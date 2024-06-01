@@ -1,3 +1,4 @@
+/// <reference types="vitest" />
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react-swc'
 
@@ -10,5 +11,10 @@ export default defineConfig({
       { find: '@ui', replacement: '/src/components/ui' },
       { find: '@icons', replacement: '/src/components/icons'}
     ]
-  }
+  },
+  test: {
+    globals: true,
+    environment: 'jsdom',
+    setupFiles: './src/setupTest.ts',
+  },
 })
