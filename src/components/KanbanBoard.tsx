@@ -9,39 +9,35 @@ function KanbanBoard() {
   const [columns, setColumns] = useState(["To do", "In progress", "Done"]);
   const [addColumn, setAddColumn] = useState(false);
   const [tasks, setTasks] = useState<Task[]>([
-    { id: useId(), name: "Task 1", stage: 0, completed: false},
-    { id: useId(), name: "Task 2", stage: 0, completed: true},
+    { id: useId(), name: "Task 1", stage: 0, completed: false },
+    { id: useId(), name: "Task 2", stage: 0, completed: true },
   ]);
 
   return (
-    <div className="m-auto flex min-h-screen w-full items-center overflow-x-auto overflow-y-hidden px-[40px]">
-      <div className="m-auto flex gap-2">
-        <div className="flex gap-4">
-          {columns.map((column, index) => (
-            <ColumnContainer
-              key={column}
-              title={column}
-              tasks={tasks.filter((task) => task.stage === index)}
-            />
-          ))}
-        </div>
-        {addColumn ? (
-          <Input
-            className="h-[60px] font-semibold w-[350px]"
-            type="text"
-            placeholder="Enter column title"
-            onBlur={() => setAddColumn(false)}
-            onKeyDown={(e) => e.key === "Enter" && setAddColumn(false)}
-            autoFocus
-          />
-        ) : (
-          <Button className="w-[350px]" onClick={() => setAddColumn(true)}>
-            <PlusIcon />
-            Add column
-          </Button>
-        )}
-      </div>
-    </div>
+    <main className="flex gap-4 justify-center min-w-max">
+      {columns.map((column, index) => (
+        <ColumnContainer
+          key={column}
+          title={column}
+          tasks={tasks.filter((task) => task.stage === index)}
+        />
+      ))}
+      {addColumn ? (
+        <Input
+          className="h-[60px] font-semibold w-[350px]"
+          type="text"
+          placeholder="Enter column title"
+          onBlur={() => setAddColumn(false)}
+          onKeyDown={(e) => e.key === "Enter" && setAddColumn(false)}
+          autoFocus
+        />
+      ) : (
+        <Button className="w-[350px]" onClick={() => setAddColumn(true)}>
+          <PlusIcon />
+          Add column
+        </Button>
+      )}
+    </main>
   );
 }
 
