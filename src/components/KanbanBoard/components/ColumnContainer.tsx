@@ -1,10 +1,10 @@
+import PlusIcon from "@/components/icons/PlusIcon";
+import TrashIcon from "@/components/icons/TrashIcon";
+import Button from "@/components/ui/Button";
+import Input from "@/components/ui/Input";
 import { Task } from "@/types";
 import { useState } from "react";
 import TaskCard from "./TaskCard";
-import PlusIcon from "./icons/PlusIcon";
-import TrashIcon from "./icons/TrashIcon";
-import Button from "./ui/Button";
-import Input from "./ui/Input";
 
 type Props = {
   title: string;

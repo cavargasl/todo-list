@@ -2,10 +2,10 @@ import { Task } from "@/types";
 import PlusIcon from "@icons/PlusIcon";
 import Button from "@ui/Button";
 import { useId, useState } from "react";
-import ColumnContainer from "./ColumnContainer";
-import Input from "./ui/Input";
+import Input from "../ui/Input";
+import ColumnContainer from "./components/ColumnContainer";
 
-function KanbanBoard() {
+export default function KanbanBoard() {
   const [columns, setColumns] = useState(["To do", "In progress", "Done"]);
   const [addColumn, setAddColumn] = useState(false);
   const [tasks, setTasks] = useState<Task[]>([
@@ -14,7 +14,10 @@ function KanbanBoard() {
   ]);
 
   return (
-    <main className="flex gap-4 justify-center min-w-max" aria-label="Kanban Board">
+    <main
+      className="flex gap-4 justify-center min-w-max"
+      aria-label="Kanban Board"
+    >
       {columns.map((column, index) => (
         <ColumnContainer
           key={column}
@@ -40,5 +43,3 @@ function KanbanBoard() {
     </main>
   );
 }
-
-export default KanbanBoard;

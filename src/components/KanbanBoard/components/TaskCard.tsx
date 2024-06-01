@@ -1,11 +1,16 @@
 import { Task } from "@/types";
-import ArrowLeft from "./icons/ArrowLeft";
-import ArrowRight from "./icons/ArrowRight";
-import TrashIcon from "./icons/TrashIcon";
-import Button from "./ui/Button";
-import CheckBox from "./ui/CheckBox";
 
-export default function TaskCard({ Task: { name, completed } }: { Task: Task }) {
+import ArrowLeft from "@/components/icons/ArrowLeft";
+import ArrowRight from "@/components/icons/ArrowRight";
+import TrashIcon from "@/components/icons/TrashIcon";
+import Button from "@/components/ui/Button";
+import CheckBox from "@/components/ui/CheckBox";
+
+export default function TaskCard({
+  Task: { name, completed },
+}: {
+  Task: Task;
+}) {
   return (
     <article className="bg-background w-full p-2 rounded-md flex gap-2">
       <CheckBox className="peer" defaultChecked={completed} />
