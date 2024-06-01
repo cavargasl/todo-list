@@ -14,7 +14,7 @@ function KanbanBoard() {
   ]);
 
   return (
-    <main className="flex gap-4 justify-center min-w-max">
+    <main className="flex gap-4 justify-center min-w-max" aria-label="Kanban Board">
       {columns.map((column, index) => (
         <ColumnContainer
           key={column}

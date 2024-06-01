@@ -27,6 +27,6 @@
     },
     "types": ["vitest/globals"],
   },
-  "include": ["src", "./src/setupTest.ts"],
+  "include": ["src", "./src/jest.setup.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
