@@ -1,4 +1,6 @@
 import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+
 import CheckBox from "../CheckBox";
 
 describe("CheckBox", () => {
@@ -22,11 +24,11 @@ describe("CheckBox", () => {
     expect(container).toMatchSnapshot();
   });
 
-  it("should change the checked state when clicked", () => {
+  it("should change the checked state when clicked", async () => {
     render(<CheckBox />);
     const checkbox = screen.getByRole("checkbox");
     expect(checkbox).not.toBeChecked();
-    checkbox.click();
+    await userEvent.click(checkbox);
     expect(checkbox).toBeChecked();
   });
 });
