@@ -1,0 +1,30 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`CheckBox > renders correctly 1`] = `
+<div>
+  <input
+    class="checkbox w-5 h-5 rounded-full checked:bg-green-500 checked:border-transparent focus:outline-none appearance-none cursor-pointer focus:border-inherit bg-black border outline-none px-2"
+    type="checkbox"
+  />
+</div>
+`;
+
+exports[`CheckBox > renders with additional props 1`] = `
+<div>
+  <input
+    aria-label="checkbox"
+    checked=""
+    class="checkbox w-5 h-5 rounded-full checked:bg-green-500 checked:border-transparent focus:outline-none appearance-none cursor-pointer focus:border-inherit bg-black border outline-none px-2"
+    type="checkbox"
+  />
+</div>
+`;
+
+exports[`CheckBox > renders with custom className 1`] = `
+<div>
+  <input
+    class="checkbox rounded-full checked:bg-green-500 checked:border-transparent focus:outline-none appearance-none cursor-pointer focus:border-inherit bg-black border outline-none h-10 w-10 px-4 custom-class"
+    type="checkbox"
+  />
+</div>
+`;
