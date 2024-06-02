@@ -1,19 +1,19 @@
-import { cn } from "@/utils";
-import { cva, type VariantProps } from "class-variance-authority";
+import { cn } from "@/utils"
+import { cva, type VariantProps } from "class-variance-authority"
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center rounded-lg font-semibold transition-all focus-visible:outline-none focus-visible:ring-foreground focus-visible:ring-2 disabled:pointer-events-none disabled:opacity-50 ease-out-circ text-nowrap gap-2",
+  "inline-flex items-center justify-center gap-2 text-nowrap rounded-lg font-semibold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground disabled:pointer-events-none disabled:opacity-50",
   {
     variants: {
       variant: {
         default:
-          "bg-background border-2 border-foreground hover:border-rose-500",
-        ghost: "text-gray-500 hover:text-white hover:bg-foreground",
+          "border-2 border-foreground bg-background hover:border-rose-500",
+        ghost: "text-gray-500 hover:bg-foreground hover:text-white",
       },
       size: {
         default: "h-[60px] p-3",
         small: "h-[40px] p-2",
-        icon: "rounded px-1 py-2 h-[40px] w-[40px]",
+        icon: "size-[40px] rounded px-1 py-2",
       },
     },
     defaultVariants: {
@@ -21,10 +21,10 @@ const buttonVariants = cva(
       size: "default",
     },
   }
-);
+)
 
 type ButtonProps = VariantProps<typeof buttonVariants> &
-  React.ButtonHTMLAttributes<HTMLButtonElement>;
+  React.ButtonHTMLAttributes<HTMLButtonElement>
 
 export default function Button({
   className,
@@ -37,5 +37,5 @@ export default function Button({
       className={cn(buttonVariants({ variant, size, className }))}
       {...props}
     />
-  );
+  )
 }

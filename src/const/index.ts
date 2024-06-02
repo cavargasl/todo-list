@@ -1,1 +1,1 @@
-export const defaultColumns = ["To do", "In progress", "Done"];
+export const defaultColumns = ["To do", "In progress", "Done"]

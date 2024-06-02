@@ -2,11 +2,7 @@
   "compilerOptions": {
     "target": "ES2020",
     "useDefineForClassFields": true,
-    "lib": [
-      "ES2020",
-      "DOM",
-      "DOM.Iterable"
-    ],
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "module": "ESNext",
     "skipLibCheck": true,
 
@@ -23,19 +19,11 @@
     "noFallthroughCasesInSwitch": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": [
-        "./src/*"
-      ],
-      "@ui/*": [
-        "./src/components/ui/*"
-      ],
-      "@icons/*": [
-        "./src/components/icons/*"
-      ],
+      "@/*": ["./src/*"],
+      "@ui/*": ["./src/components/ui/*"],
+      "@icons/*": ["./src/components/icons/*"]
     },
-    "types": [
-      "vitest/globals"
-    ],
+    "types": ["vitest/globals"]
   },
   "include": [
     ".eslintrc.cjs",
@@ -43,7 +31,7 @@
     "**/*.ts",
     "**/*.tsx",
     "**/*.cjs",
-    "**/*.mjs",
+    "**/*.mjs"
   ],
   "references": [
     {

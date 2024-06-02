@@ -1,23 +1,28 @@
-import PlusIcon from "@/components/icons/PlusIcon";
-import TrashIcon from "@/components/icons/TrashIcon";
-import Button from "@/components/ui/Button";
-import Input from "@/components/ui/Input";
-import { Task } from "@/types";
-import { useState } from "react";
-import TaskCard from "./TaskCard";
+import { useState } from "react"
+import { type Task } from "@/types"
+
+import Button from "@/components/ui/Button"
+import Input from "@/components/ui/Input"
+import PlusIcon from "@/components/icons/PlusIcon"
+import TrashIcon from "@/components/icons/TrashIcon"
+
+import TaskCard from "./TaskCard"
 
 type Props = {
-  title: string;
-  tasks: Task[];
-};
+  title: string
+  tasks: Task[]
+}
 
 export default function ColumnContainer({ title, tasks }: Props) {
-  const [editMode, setEditMode] = useState(false);
-  const [addItem, setAddItem] = useState(false);
+  const [editMode, setEditMode] = useState(false)
+  const [addItem, setAddItem] = useState(false)
 
   return (
-    <div className="bg-foreground w-[350px] h-[500px] rounded-md flex flex-col p-1" aria-label="column">
-      <header className="text-lg bg-background h-[60px] rounded-md p-3 font-bold flex justify-between items-center">
+    <div
+      className="flex h-[500px] w-[350px] flex-col rounded-md bg-foreground p-1"
+      aria-label="column"
+    >
+      <header className="flex h-[60px] items-center justify-between rounded-md bg-background p-3 text-lg font-bold">
         {editMode ? (
           <Input
             type="text"
@@ -39,7 +44,7 @@ export default function ColumnContainer({ title, tasks }: Props) {
           <TrashIcon />
         </Button>
       </header>
-      <main className="flex flex-grow flex-col gap-2 py-4 overflow-y-auto overflow-hidden">
+      <main className="flex grow flex-col gap-2 overflow-hidden overflow-y-auto py-4">
         {tasks.map((task) => (
           <TaskCard key={task.id} Task={task} />
         ))}
@@ -67,5 +72,5 @@ export default function ColumnContainer({ title, tasks }: Props) {
         )}
       </footer>
     </div>
-  );
+  )
 }

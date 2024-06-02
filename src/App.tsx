@@ -1,14 +1,14 @@
-import { KanbanBoard } from "@/components/KanbanBoard";
+import { KanbanBoard } from "@/components/KanbanBoard"
 
 function App() {
   return (
-    <div className="flex flex-col min-h-screen gap-4 justify-center overflow-y-hidden px-[40px]">
-      <header className="w-full text-center font-bold text-3xl">
+    <div className="flex min-h-screen flex-col justify-center gap-4 overflow-y-hidden px-[40px]">
+      <header className="w-full text-center text-3xl font-bold">
         <h1>Todo List</h1>
       </header>
       <KanbanBoard />
     </div>
-  );
+  )
 }
 
-export default App;
+export default App

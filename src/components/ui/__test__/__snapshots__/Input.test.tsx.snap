@@ -3,7 +3,7 @@
 exports[`Input component > renders correctly 1`] = `
 <div>
   <input
-    class="bg-black focus:border-rose-500 border rounded-md outline-none px-2 w-full"
+    class="w-full rounded-md border bg-black px-2 outline-none focus:border-rose-500"
   />
 </div>
 `;

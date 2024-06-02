@@ -2,8 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
-html, body, #root {
-  @apply bg-black text-white box-border;
+html,
+body,
+#root {
+  @apply box-border bg-black text-white;
 }
 
 ::-webkit-scrollbar {
@@ -16,11 +18,11 @@ html, body, #root {
   @apply rounded bg-rose-800;
 }
 
-.checkbox{
+.checkbox {
   position: relative;
 }
 .checkbox:checked::after {
-  content: '\2713';
+  content: "\2713";
   display: flex;
   align-items: center;
   justify-content: center;
