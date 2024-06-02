@@ -1,21 +1,29 @@
-import { Task } from "@/types";
+import { type Task } from "@/types";
 import PlusIcon from "@icons/PlusIcon";
 import Button from "@ui/Button";
 import { useId, useState } from "react";
 import Input from "../ui/Input";
 import ColumnContainer from "./components/ColumnContainer";
+import { defaultColumns } from "@/const";
 
 export default function KanbanBoard() {
-  const [columns, setColumns] = useState(["To do", "In progress", "Done"]);
+  const [columns, setColumns] = useState(defaultColumns);
   const [addColumn, setAddColumn] = useState(false);
   const [tasks, setTasks] = useState<Task[]>([
     { id: useId(), name: "Task 1", stage: 0, completed: false },
     { id: useId(), name: "Task 2", stage: 0, completed: true },
   ]);
 
+  function keyPressHandler(e: React.KeyboardEvent<HTMLInputElement>) {
+    if (e.key === "Escape") return setAddColumn(false);
+    if (e.key === "Enter") {
+      setAddColumn(false);
+    }
+  }
+
   return (
     <main
-      className="flex gap-4 justify-center min-w-max"
+      className="flex min-w-max justify-center gap-4"
       aria-label="Kanban Board"
     >
       {columns.map((column, index) => (
@@ -27,11 +35,11 @@ export default function KanbanBoard() {
       ))}
       {addColumn ? (
         <Input
-          className="h-[60px] font-semibold w-[350px]"
+          className="h-[60px] w-[350px] font-semibold"
           type="text"
           placeholder="Enter column title"
           onBlur={() => setAddColumn(false)}
-          onKeyDown={(e) => e.key === "Enter" && setAddColumn(false)}
+          onKeyDown={keyPressHandler}
           autoFocus
         />
       ) : (

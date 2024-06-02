@@ -16,7 +16,7 @@ export default function ColumnContainer({ title, tasks }: Props) {
   const [addItem, setAddItem] = useState(false);
 
   return (
-    <div className="bg-foreground w-[350px] h-[500px] rounded-md flex flex-col p-1">
+    <div className="bg-foreground w-[350px] h-[500px] rounded-md flex flex-col p-1" aria-label="column">
       <header className="text-lg bg-background h-[60px] rounded-md p-3 font-bold flex justify-between items-center">
         {editMode ? (
           <Input
