@@ -11,7 +11,7 @@
     "prettier": "prettier --check .",
     "preview": "vite preview",
     "test": "vitest",
-    "prepare": "husky install"
+    "prepare": "husky"
   },
   "dependencies": {
     "class-variance-authority": "^0.7.0",
