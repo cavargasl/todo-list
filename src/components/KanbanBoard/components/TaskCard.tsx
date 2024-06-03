@@ -12,7 +12,10 @@ export default function TaskCard({
   Task: Task
 }) {
   return (
-    <article aria-label="task" className="flex w-full gap-2 rounded-md bg-background p-2">
+    <article
+      aria-label="task"
+      className="flex w-full gap-2 rounded-md bg-background p-2"
+    >
       <CheckBox className="peer" defaultChecked={completed} />
       <p className="w-full peer-checked:line-through">{name}</p>
       <div className="flex gap-1">

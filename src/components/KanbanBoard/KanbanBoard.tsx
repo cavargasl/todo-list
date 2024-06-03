@@ -8,9 +8,9 @@ import Input from "../ui/Input"
 import ColumnContainer from "./components/ColumnContainer"
 
 export default function KanbanBoard() {
-  const [columns, setColumns] = useState(defaultColumns)
+  const [columns] = useState(defaultColumns)
   const [addColumn, setAddColumn] = useState(false)
-  const [tasks, setTasks] = useState<Task[]>(defaultTasks)
+  const [tasks] = useState<Task[]>(defaultTasks)
 
   function keyPressHandler(e: React.KeyboardEvent<HTMLInputElement>) {
     if (e.key === "Escape") return setAddColumn(false)
