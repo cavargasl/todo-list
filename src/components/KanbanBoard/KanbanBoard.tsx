@@ -1,5 +1,5 @@
-import { useId, useState } from "react"
-import { defaultColumns } from "@/const"
+import { useState } from "react"
+import { defaultColumns, defaultTasks } from "@/const"
 import { type Task } from "@/types"
 import PlusIcon from "@icons/PlusIcon"
 import Button from "@ui/Button"
@@ -10,10 +10,7 @@ import ColumnContainer from "./components/ColumnContainer"
 export default function KanbanBoard() {
   const [columns, setColumns] = useState(defaultColumns)
   const [addColumn, setAddColumn] = useState(false)
-  const [tasks, setTasks] = useState<Task[]>([
-    { id: useId(), name: "Task 1", stage: 0, completed: false },
-    { id: useId(), name: "Task 2", stage: 0, completed: true },
-  ])
+  const [tasks, setTasks] = useState<Task[]>(defaultTasks)
 
   function keyPressHandler(e: React.KeyboardEvent<HTMLInputElement>) {
     if (e.key === "Escape") return setAddColumn(false)
