@@ -1,5 +1,5 @@
-import { defaultColumns } from "@/const"
-import { render, screen } from "@testing-library/react"
+import { defaultColumns, defaultTasks } from "@/const"
+import { render, screen, within } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 
 import KanbanBoard from "../KanbanBoard"
@@ -28,6 +28,22 @@ describe("KanbanBoard", () => {
     expect(
       screen.queryByPlaceholderText("Enter column title")
     ).not.toBeInTheDocument()
+  })
+
+  describe("renders a tasks in the columns", () => {
+    test("renders all tasks", () => {
+      const taskElements = screen.getAllByLabelText("task")
+      expect(taskElements.length).toBe(defaultTasks.length)
+    })
+
+    test("renders tasks in the corresponding column", () => {
+      const columnContainers = screen.getAllByLabelText("column")
+      defaultTasks.forEach((task) => {
+        const columnElement = columnContainers[task.stage]
+        const { getByText } = within(columnElement)
+        expect(getByText(task.name)).toBeInTheDocument()
+      })
+    })
   })
 
   describe("when the 'Add column' button is clicked", () => {
