@@ -22,10 +22,10 @@ describe("KanbanBoard", () => {
   })
 
   test("hide the column when the delete button is clicked", async () => {
-    const columnContainers = screen.getAllByLabelText("remove column")
+    const columnContainers = screen.getAllByLabelText("delete column")
     expect(columnContainers.length).toBe(defaultColumns.length)
     const deleteColumnButton = screen.getAllByRole("button", {
-      name: /remove column/i,
+      name: /delete column/i,
     })[1]
     await userEvent.click(deleteColumnButton)
     const columnContainersAfterDelete = screen.getAllByLabelText("column")
