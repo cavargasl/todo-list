@@ -11,9 +11,15 @@ import TaskCard from "./TaskCard"
 type Props = {
   title: string
   tasks: Task[]
+  onDeleteColumn: () => void
+  onEditTitle: (title: string) => void
 }
 
-export default function ColumnContainer({ title, tasks }: Props) {
+export default function ColumnContainer({
+  title,
+  tasks,
+  onDeleteColumn,
+}: Props) {
   const [editMode, setEditMode] = useState(false)
   const [addItem, setAddItem] = useState(false)
 
@@ -26,9 +32,9 @@ export default function ColumnContainer({ title, tasks }: Props) {
         {editMode ? (
           <Input
             type="text"
+            aria-label="Edit column title"
             defaultValue={title}
             onBlur={() => setEditMode(false)}
-            onKeyDown={(e) => e.key === "Enter" && setEditMode(false)}
             autoFocus
           />
         ) : (
@@ -39,7 +45,7 @@ export default function ColumnContainer({ title, tasks }: Props) {
         <Button
           variant={"ghost"}
           size={"icon"}
-          onClick={() => console.log("remove")}
+          onClick={onDeleteColumn}
           aria-label="delete column"
         >
           <TrashIcon />

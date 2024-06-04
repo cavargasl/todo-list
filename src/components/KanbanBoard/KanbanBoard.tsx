@@ -29,6 +29,8 @@ export default function KanbanBoard() {
           key={column}
           title={column}
           tasks={tasks.filter((task) => task.stage === index)}
+          onDeleteColumn={() => console.log("delete column")}
+          onEditTitle={(title) => console.log(title)}
         />
       ))}
       {addColumn ? (
