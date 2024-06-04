@@ -9,14 +9,28 @@ describe("KanbanBoard", () => {
     render(<KanbanBoard />)
   })
 
-  test("renders the board title", () => {
+  test("renders the board", () => {
     const titleElement = screen.getByLabelText(/Kanban Board/i)
     expect(titleElement).toBeInTheDocument()
   })
 
-  test("renders a column container for each column", () => {
-    const columnContainers = screen.getAllByLabelText("column")
+  test("renders all columns with the correct title", () => {
+    defaultColumns.forEach((column) => {
+      const columnElement = screen.getByText(column)
+      expect(columnElement).toBeInTheDocument()
+    })
+  })
+
+  test("hide the column when the delete button is clicked", async () => {
+    const columnContainers = screen.getAllByLabelText("remove column")
     expect(columnContainers.length).toBe(defaultColumns.length)
+    const deleteColumnButton = screen.getAllByRole("button", {
+      name: /remove column/i,
+    })[1]
+    await userEvent.click(deleteColumnButton)
+    const columnContainersAfterDelete = screen.getAllByLabelText("column")
+    expect(columnContainersAfterDelete.length).toBe(defaultColumns.length - 1)
+    expect(screen.queryByText(defaultColumns[1])).not.toBeInTheDocument()
   })
 
   test("renders a button to add a new column", () => {

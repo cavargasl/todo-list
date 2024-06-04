@@ -40,6 +40,7 @@ export default function ColumnContainer({ title, tasks }: Props) {
           variant={"ghost"}
           size={"icon"}
           onClick={() => console.log("remove")}
+          aria-label="remove column"
         >
           <TrashIcon />
         </Button>
