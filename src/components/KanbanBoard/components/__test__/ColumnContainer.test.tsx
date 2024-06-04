@@ -7,13 +7,14 @@ import ColumnContainer from "../ColumnContainer"
 const onDeleteColumnMock = vi.fn()
 const onEditTitleMock = vi.fn()
 const mockTitle = "Test Column"
+const taskInStage0 = defaultTasks.filter((task) => task.stage === 0)
 
 describe("ColumnContainer", () => {
   beforeEach(() => {
     render(
       <ColumnContainer
         title={mockTitle}
-        tasks={defaultTasks}
+        tasks={taskInStage0}
         onDeleteColumn={onDeleteColumnMock}
         onEditTitle={onEditTitleMock}
       />
@@ -32,7 +33,20 @@ describe("ColumnContainer", () => {
 
   test("renders the tasks correctly", () => {
     const taskElements = screen.getAllByRole("article", { name: /task/i })
-    expect(taskElements.length).toBe(defaultTasks.length)
+    const tasksContent = screen.getByRole("main")
+    expect(tasksContent.children).toHaveLength(taskInStage0.length)
+    taskInStage0.forEach((task) => {
+      const taskElement = taskElements.find(
+        (element) => element.textContent === task.name
+      )
+      expect(taskElement).toBeInTheDocument()
+    })
+    defaultTasks
+      .filter((e) => e.stage !== 0)
+      .forEach((task) => {
+        const taskElement = screen.queryByText(task.name)
+        expect(taskElement).not.toBeInTheDocument()
+      })
   })
 
   test("renders the add task button", () => {
