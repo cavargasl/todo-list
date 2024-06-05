@@ -1,11 +1,11 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`ColumnContainer > renders the component 1`] = `
-<div
+<li
   aria-label="column"
   class="flex h-[500px] w-[350px] flex-col rounded-md bg-foreground p-1"
 >
-  <header
+  <div
     class="flex h-[60px] items-center justify-between rounded-md bg-background p-3 text-lg font-bold"
   >
     <span
@@ -32,11 +32,12 @@ exports[`ColumnContainer > renders the component 1`] = `
         />
       </svg>
     </button>
-  </header>
-  <main
+  </div>
+  <ul
+    aria-label="tasks"
     class="flex grow flex-col gap-2 overflow-hidden overflow-y-auto py-4"
   >
-    <article
+    <li
       aria-label="task"
       class="flex w-full gap-2 rounded-md bg-background p-2"
     >
@@ -53,6 +54,7 @@ exports[`ColumnContainer > renders the component 1`] = `
         class="flex gap-1"
       >
         <button
+          aria-label="move to left"
           class="inline-flex items-center justify-center gap-2 text-nowrap font-semibold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground disabled:pointer-events-none disabled:opacity-50 text-gray-500 hover:bg-foreground hover:text-white rounded size-[20px] p-0"
         >
           <svg
@@ -71,6 +73,7 @@ exports[`ColumnContainer > renders the component 1`] = `
           </svg>
         </button>
         <button
+          arial-label="move to right"
           class="inline-flex items-center justify-center gap-2 text-nowrap font-semibold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground disabled:pointer-events-none disabled:opacity-50 text-gray-500 hover:bg-foreground hover:text-white rounded size-[20px] p-0"
         >
           <svg
@@ -89,6 +92,7 @@ exports[`ColumnContainer > renders the component 1`] = `
           </svg>
         </button>
         <button
+          aria-label="delete task"
           class="inline-flex items-center justify-center gap-2 text-nowrap font-semibold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground disabled:pointer-events-none disabled:opacity-50 text-gray-500 hover:bg-foreground hover:text-white rounded size-[20px] p-0"
         >
           <svg
@@ -107,8 +111,8 @@ exports[`ColumnContainer > renders the component 1`] = `
           </svg>
         </button>
       </div>
-    </article>
-    <article
+    </li>
+    <li
       aria-label="task"
       class="flex w-full gap-2 rounded-md bg-background p-2"
     >
@@ -126,6 +130,7 @@ exports[`ColumnContainer > renders the component 1`] = `
         class="flex gap-1"
       >
         <button
+          aria-label="move to left"
           class="inline-flex items-center justify-center gap-2 text-nowrap font-semibold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground disabled:pointer-events-none disabled:opacity-50 text-gray-500 hover:bg-foreground hover:text-white rounded size-[20px] p-0"
         >
           <svg
@@ -144,6 +149,7 @@ exports[`ColumnContainer > renders the component 1`] = `
           </svg>
         </button>
         <button
+          arial-label="move to right"
           class="inline-flex items-center justify-center gap-2 text-nowrap font-semibold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground disabled:pointer-events-none disabled:opacity-50 text-gray-500 hover:bg-foreground hover:text-white rounded size-[20px] p-0"
         >
           <svg
@@ -162,6 +168,7 @@ exports[`ColumnContainer > renders the component 1`] = `
           </svg>
         </button>
         <button
+          aria-label="delete task"
           class="inline-flex items-center justify-center gap-2 text-nowrap font-semibold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground disabled:pointer-events-none disabled:opacity-50 text-gray-500 hover:bg-foreground hover:text-white rounded size-[20px] p-0"
         >
           <svg
@@ -180,28 +187,26 @@ exports[`ColumnContainer > renders the component 1`] = `
           </svg>
         </button>
       </div>
-    </article>
-  </main>
-  <footer>
-    <button
-      class="inline-flex items-center gap-2 text-nowrap rounded-lg font-semibold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground disabled:pointer-events-none disabled:opacity-50 text-gray-500 hover:text-white h-[40px] p-2 w-full justify-start hover:bg-background"
+    </li>
+  </ul>
+  <button
+    class="inline-flex items-center gap-2 text-nowrap rounded-lg font-semibold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground disabled:pointer-events-none disabled:opacity-50 text-gray-500 hover:text-white h-[40px] p-2 w-full justify-start hover:bg-background"
+  >
+    <svg
+      class="size-6"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.5"
+      viewBox="0 0 24 24"
+      xmlns="http://www.w3.org/2000/svg"
     >
-      <svg
-        class="size-6"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="1.5"
-        viewBox="0 0 24 24"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        />
-      </svg>
-      Add item
-    </button>
-  </footer>
-</div>
+      <path
+        d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+    Add item
+  </button>
+</li>
 `;

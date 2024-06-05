@@ -22,7 +22,9 @@ describe("ColumnContainer", () => {
   })
 
   test("renders the component", () => {
-    const columnContainerElement = screen.getByLabelText("column")
+    const columnContainerElement = screen.getByRole("listitem", {
+      name: "column",
+    })
     expect(columnContainerElement).toMatchSnapshot()
   })
 
@@ -32,8 +34,8 @@ describe("ColumnContainer", () => {
   })
 
   test("renders the tasks correctly", () => {
-    const taskElements = screen.getAllByRole("article", { name: /task/i })
-    const tasksContent = screen.getByRole("main")
+    const taskElements = screen.getAllByRole("listitem", { name: /task/i })
+    const tasksContent = screen.getByRole("list", { name: "tasks" })
     expect(tasksContent.children).toHaveLength(taskInStage0.length)
     taskInStage0.forEach((task) => {
       const taskElement = taskElements.find(
@@ -73,31 +75,60 @@ describe("ColumnContainer", () => {
     })
 
     test("calls the edit title function when the enter key is pressed", async () => {
-      const inputEditTitle = screen.getByLabelText("Edit column title")
-      await userEvent.type(inputEditTitle, "New title{enter}")
-      expect(onEditTitleMock).toHaveBeenCalledTimes(1)
+      const inputEditTitle = screen.getByRole("textbox", {
+        name: "Edit column title",
+      })
+      expect(inputEditTitle).toBeInTheDocument()
+      await userEvent.type(inputEditTitle, "New title{enter}", {
+        initialSelectionStart: 0,
+        initialSelectionEnd: 11,
+      })
+      expect(onEditTitleMock).toHaveBeenCalled()
+      expect(onEditTitleMock).toHaveBeenCalledWith("New title")
       expect(screen.getByText("New title")).toBeInTheDocument()
       expect(
-        screen.queryByLabelText("Edit column title")
+        screen.queryByRole("textbox", { name: "Edit column title" })
       ).not.toBeInTheDocument()
     })
 
     test("cancel the edit mode when the escape key is pressed", async () => {
-      const inputEditTitle = screen.getByLabelText("Edit column title")
-      await userEvent.type(inputEditTitle, "cancel{esc}")
-      expect(screen.queryByText("cancel")).not.toBeInTheDocument()
+      const inputEditTitle = screen.getByRole("textbox", {
+        name: "Edit column title",
+      })
+      expect(inputEditTitle).toBeInTheDocument()
+      await userEvent.type(inputEditTitle, "cancel", {
+        initialSelectionStart: 0,
+        initialSelectionEnd: 11,
+      })
+      expect(inputEditTitle).toHaveValue("cancel")
+      await userEvent.type(inputEditTitle, "{esc}")
+      expect(
+        screen.queryByRole("textbox", { name: "Edit column title" })
+      ).not.toHaveValue("cancel")
       expect(screen.getByText(mockTitle)).toBeInTheDocument()
     })
 
-    test("cancel the edit mode when the input loses focus", async () => {
-      const inputEditTitle = screen.getByDisplayValue(mockTitle)
-      await userEvent.type(inputEditTitle, "canceled blur")
+    test("cancel the edit mode when the input loses focus with tab", async () => {
+      const inputEditTitle = screen.getByRole("textbox", {
+        name: "Edit column title",
+      })
+      expect(inputEditTitle).toBeInTheDocument()
+      await userEvent.type(inputEditTitle, "canceled blur", {
+        initialSelectionStart: 0,
+        initialSelectionEnd: 11,
+      })
       await userEvent.tab()
       expect(screen.queryByText("canceled blur")).not.toBeInTheDocument()
       expect(screen.getByText(mockTitle)).toBeInTheDocument()
-      await userEvent.type(inputEditTitle, "canceled blur")
+    })
+    test("cancel the edit mode when the input loses focus", async () => {
+      const inputEditTitle = screen.getByRole("textbox", {
+        name: "Edit column title",
+      })
+      expect(inputEditTitle).toBeInTheDocument()
+      await userEvent.type(inputEditTitle, "{backspace} 1")
       await userEvent.click(document.body)
-      expect(screen.queryByText("canceled blur")).not.toBeInTheDocument()
+      expect(screen.queryByText(mockTitle + " 1")).not.toBeInTheDocument()
       expect(screen.getByText(mockTitle)).toBeInTheDocument()
     })
   })
@@ -112,7 +143,9 @@ describe("ColumnContainer", () => {
     })
 
     test("delete the column container", async () => {
-      const columnContainerElement = screen.getByText(mockTitle)
+      const columnContainerElement = screen.getByRole("listitem", {
+        name: "column",
+      })
       expect(columnContainerElement).toBeInTheDocument()
       const deleteColumnButton = screen.getByRole("button", {
         name: /delete column/i,

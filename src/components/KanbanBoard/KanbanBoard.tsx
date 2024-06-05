@@ -20,19 +20,18 @@ export default function KanbanBoard() {
   }
 
   return (
-    <main
-      className="flex min-w-max justify-center gap-4"
-      aria-label="Kanban Board"
-    >
-      {columns.map((column, index) => (
-        <ColumnContainer
-          key={column}
-          title={column}
-          tasks={tasks.filter((task) => task.stage === index)}
-          onDeleteColumn={() => console.log("delete column")}
-          onEditTitle={(title) => console.log(title)}
-        />
-      ))}
+    <main aria-label="Kanban Board" className="flex min-w-max gap-3">
+      <ul className="flex gap-3">
+        {columns.map((column, index) => (
+          <ColumnContainer
+            key={column}
+            title={column}
+            tasks={tasks.filter((task) => task.stage === index)}
+            onDeleteColumn={() => console.log("delete column")}
+            onEditTitle={(title) => console.log(title)}
+          />
+        ))}
+      </ul>
       {addColumn ? (
         <Input
           className="h-[60px] w-[350px] font-semibold"
@@ -43,7 +42,7 @@ export default function KanbanBoard() {
           autoFocus
         />
       ) : (
-        <Button className="w-[350px]" onClick={() => setAddColumn(true)}>
+        <Button onClick={() => setAddColumn(true)}>
           <PlusIcon />
           Add column
         </Button>
