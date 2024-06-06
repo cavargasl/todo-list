@@ -73,7 +73,7 @@ exports[`ColumnContainer > renders the component 1`] = `
           </svg>
         </button>
         <button
-          arial-label="move to right"
+          aria-label="move to right"
           class="inline-flex items-center justify-center gap-2 text-nowrap font-semibold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground disabled:pointer-events-none disabled:opacity-50 text-gray-500 hover:bg-foreground hover:text-white rounded size-[20px] p-0"
         >
           <svg
@@ -149,7 +149,7 @@ exports[`ColumnContainer > renders the component 1`] = `
           </svg>
         </button>
         <button
-          arial-label="move to right"
+          aria-label="move to right"
           class="inline-flex items-center justify-center gap-2 text-nowrap font-semibold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground disabled:pointer-events-none disabled:opacity-50 text-gray-500 hover:bg-foreground hover:text-white rounded size-[20px] p-0"
         >
           <svg
