@@ -6,6 +6,7 @@ import Button from "@ui/Button"
 
 import Input from "../ui/Input"
 import ColumnContainer from "./components/ColumnContainer"
+import TaskCard from "./components/TaskCard"
 
 export default function KanbanBoard() {
   const [columns] = useState(defaultColumns)
@@ -26,10 +27,15 @@ export default function KanbanBoard() {
           <ColumnContainer
             key={column}
             title={column}
-            tasks={tasks.filter((task) => task.stage === index)}
             onDeleteColumn={() => console.log("delete column")}
             onEditTitle={(title) => console.log(title)}
-          />
+          >
+            {tasks
+              .filter((task) => task.stage === index)
+              .map((task) => (
+                <TaskCard key={task.id} Task={task} />
+              ))}
+          </ColumnContainer>
         ))}
       </ul>
       {addColumn ? (

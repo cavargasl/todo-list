@@ -6,11 +6,10 @@ import ArrowLeft from "@/components/icons/ArrowLeft"
 import ArrowRight from "@/components/icons/ArrowRight"
 import TrashIcon from "@/components/icons/TrashIcon"
 
-export default function TaskCard({
-  Task: { name, completed },
-}: {
+type TaskCardProps = {
   Task: Task
-}) {
+}
+export default function TaskCard({ Task: { name, completed } }: TaskCardProps) {
   return (
     <li
       aria-label="task"

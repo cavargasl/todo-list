@@ -1,24 +1,21 @@
 import { useState } from "react"
-import { type Task } from "@/types"
 
 import Button from "@/components/ui/Button"
 import Input from "@/components/ui/Input"
 import PlusIcon from "@/components/icons/PlusIcon"
 import TrashIcon from "@/components/icons/TrashIcon"
 
-import TaskCard from "./TaskCard"
-
 type Props = {
   title: string
-  tasks: Task[]
   onDeleteColumn: () => void
   onEditTitle: (title: string) => void
+  children: React.ReactNode
 }
 
 export default function ColumnContainer({
   title,
-  tasks,
   onDeleteColumn,
+  children,
 }: Props) {
   const [editMode, setEditMode] = useState(false)
   const [addItem, setAddItem] = useState(false)
@@ -56,9 +53,7 @@ export default function ColumnContainer({
         aria-label="tasks"
         className="flex grow flex-col gap-2 overflow-hidden overflow-y-auto py-4"
       >
-        {tasks.map((task) => (
-          <TaskCard key={task.id} Task={task} />
-        ))}
+        {children}
       </ul>
 
       {addItem ? (
