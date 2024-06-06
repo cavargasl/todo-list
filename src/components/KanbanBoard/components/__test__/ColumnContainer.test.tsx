@@ -8,6 +8,11 @@ import TaskCard from "../TaskCard"
 const onDeleteColumnMock = vi.fn()
 const onEditTitleMock = vi.fn()
 const mockTitle = "Test Column"
+const functionsTaskMock = {
+  onDeleteTask: vi.fn(),
+  onEditTask: vi.fn(),
+  onMoveTask: vi.fn(),
+}
 
 describe("ColumnContainer", () => {
   beforeEach(() => {
@@ -17,8 +22,16 @@ describe("ColumnContainer", () => {
         onDeleteColumn={onDeleteColumnMock}
         onEditTitle={onEditTitleMock}
       >
-        <TaskCard key={defaultTasks[0].id} Task={defaultTasks[0]} />
-        <TaskCard key={defaultTasks[1].id} Task={defaultTasks[1]} />
+        <TaskCard
+          task={defaultTasks[0]}
+          functionsTask={functionsTaskMock}
+          lastStage={true}
+        />
+        <TaskCard
+          task={defaultTasks[1]}
+          functionsTask={functionsTaskMock}
+          lastStage={false}
+        />
       </ColumnContainer>
     )
   })

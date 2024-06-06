@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { defaultColumns, defaultTasks } from "@/const"
-import { type Task } from "@/types"
+import { type FunctionsTask, type Task } from "@/types"
 import PlusIcon from "@icons/PlusIcon"
 import Button from "@ui/Button"
 
@@ -19,6 +19,11 @@ export default function KanbanBoard() {
       setAddColumn(false)
     }
   }
+  const functionsTask: FunctionsTask = {
+    onDeleteTask: () => console.log("delete task"),
+    onEditTask: () => console.log("edit task"),
+    onMoveTask: () => console.log("move task"),
+  }
 
   return (
     <main aria-label="Kanban Board" className="flex min-w-max gap-3">
@@ -33,7 +38,12 @@ export default function KanbanBoard() {
             {tasks
               .filter((task) => task.stage === index)
               .map((task) => (
-                <TaskCard key={task.id} Task={task} />
+                <TaskCard
+                  key={task.id}
+                  task={task}
+                  functionsTask={functionsTask}
+                  lastStage={task.stage === column.length - 1}
+                />
               ))}
           </ColumnContainer>
         ))}
