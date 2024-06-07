@@ -58,6 +58,92 @@ describe("KanbanBoard", () => {
         expect(getByText(task.name)).toBeInTheDocument()
       })
     })
+
+    describe("when interacting with the tasks", () => {
+      test("not move the task when the move to left button is clicked and stage is 0", async () => {
+        const moveTaskLeftButton = screen.getAllByRole("button", {
+          name: "move to left",
+        })[0]
+        expect(moveTaskLeftButton).toBeDisabled()
+      })
+
+      test("move the task when the move to left button is clicked", async () => {
+        const columnPosition1 = screen.getAllByRole("listitem", {
+          name: "column",
+        })[1]
+        const taskStage1 = within(columnPosition1).getAllByRole("listitem", {
+          name: "task",
+        })[0]
+        const taskText = taskStage1.textContent
+        if (!taskText) throw new Error("Task text is empty")
+        expect(within(columnPosition1).getByText(taskText)).toBeInTheDocument()
+        const moveTaskLeftButton = within(taskStage1).getByRole("button", {
+          name: "move to left",
+        })
+        await userEvent.click(moveTaskLeftButton)
+        const columnPosition0 = screen.getAllByRole("listitem", {
+          name: "column",
+        })[0]
+        expect(within(columnPosition0).getByText(taskText)).toBeInTheDocument()
+        expect(
+          within(columnPosition1).queryByText(taskText)
+        ).not.toBeInTheDocument()
+      })
+
+      test("disables the button to move to right when the task is in the last stage", async () => {
+        const lastColumn = screen.getAllByRole("listitem", { name: "column" })[
+          defaultColumns.length - 1
+        ]
+        const lastTask = within(lastColumn).getByRole("listitem", {
+          name: "task",
+        })
+        const moveTaskRightButton = within(lastTask).getByRole("button", {
+          name: "move to right",
+        })
+        expect(lastTask).toBeInTheDocument()
+        expect(moveTaskRightButton).toBeDisabled()
+      })
+
+      test("move the task when the move to right button is clicked", async () => {
+        const columnPosition1 = screen.getAllByRole("listitem", {
+          name: "column",
+        })[1]
+        const taskStage1 = within(columnPosition1).getByRole("listitem", {
+          name: "task",
+        })
+        const taskText = taskStage1.textContent
+        if (!taskText) throw new Error("Task text is empty")
+        expect(within(columnPosition1).getByText(taskText)).toBeInTheDocument()
+        const moveTaskRightButton = within(taskStage1).getByRole("button", {
+          name: "move to right",
+        })
+        await userEvent.click(moveTaskRightButton)
+        const columnPosition2 = screen.getAllByRole("listitem", {
+          name: "column",
+        })[2]
+        expect(within(columnPosition2).getByText(taskText)).toBeInTheDocument()
+        expect(
+          within(columnPosition1).queryByText(taskText)
+        ).not.toBeInTheDocument()
+      })
+
+      test("delete the task when the delete button is clicked", async () => {
+        const columnPosition1 = screen.getAllByRole("listitem", {
+          name: "column",
+        })[1]
+        const taskStage1 = within(columnPosition1).getByRole("listitem", {
+          name: "task",
+        })
+        const taskText = taskStage1.textContent
+        if (!taskText) throw new Error("Task text is empty")
+        expect(within(columnPosition1).getByText(taskText)).toBeInTheDocument()
+        const deleteTaskButton = within(taskStage1).getByRole("button", {
+          name: "delete task",
+        })
+        await userEvent.click(deleteTaskButton)
+        expect(screen.queryByText(taskText)).not.toBeInTheDocument()
+      })
+    })
   })
 
   describe("when the 'Add column' button is clicked", () => {
