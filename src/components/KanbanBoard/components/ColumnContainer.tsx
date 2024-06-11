@@ -7,8 +7,10 @@ import TrashIcon from "@/components/icons/TrashIcon"
 
 type Props = {
   title: string
+  columnIndex: number
   onDeleteColumn: () => void
   onEditTitle: (title: string) => void
+  onAddTask: () => void
   children: React.ReactNode
 }
 

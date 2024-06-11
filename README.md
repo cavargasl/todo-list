@@ -14,34 +14,40 @@ Este repositorio contiene el código base para una aplicación de lista de tarea
 ## Instalación
 
 1. Clona este repositorio:
-    ```sh
-    git clone https://github.com/cavargasl/todo-list
-    ```
+   ```sh
+   git clone https://github.com/cavargasl/todo-list
+   ```
 2. Navega al directorio del proyecto:
-    ```sh
-    cd todo-list
-    ```
+   ```sh
+   cd todo-list
+   ```
 3. Instala las dependencias:
-    ```sh
-    npm install
-    ```
+   ```sh
+   npm install
+   ```
 
 ## Uso
 
 Para iniciar la aplicación en modo de desarrollo:
+
 ```sh
 npm run dev
 ```
+
 Para ejecutar las pruebas unitarias:
+
 ```sh
 npm run test
 ```
 
 ## Contribuciones
+
 Las contribuciones son bienvenidas. Siéntete libre de abrir un issue o enviar un pull request.
 
 ## Licencia
+
 Este proyecto está licenciado bajo la [MIT License](./LICENCE.md).
 
 ## Contacto
+
 Para cualquier consulta, puedes contactarme a través de [LinkedIn](https://www.linkedin.com/in/cavargasl/).
