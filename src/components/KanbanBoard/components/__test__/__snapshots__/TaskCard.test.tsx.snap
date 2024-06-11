@@ -21,6 +21,7 @@ exports[`TaskCard > renders component with completed style 1`] = `
     <button
       aria-label="move to left"
       class="inline-flex items-center justify-center gap-2 text-nowrap font-semibold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground disabled:pointer-events-none disabled:opacity-50 text-gray-500 hover:bg-foreground hover:text-white rounded size-[20px] p-0"
+      disabled=""
     >
       <svg
         class="size-6"
@@ -40,6 +41,7 @@ exports[`TaskCard > renders component with completed style 1`] = `
     <button
       aria-label="move to right"
       class="inline-flex items-center justify-center gap-2 text-nowrap font-semibold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground disabled:pointer-events-none disabled:opacity-50 text-gray-500 hover:bg-foreground hover:text-white rounded size-[20px] p-0"
+      disabled=""
     >
       <svg
         class="size-6"
@@ -99,6 +101,7 @@ exports[`TaskCard > renders the component  1`] = `
     <button
       aria-label="move to left"
       class="inline-flex items-center justify-center gap-2 text-nowrap font-semibold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground disabled:pointer-events-none disabled:opacity-50 text-gray-500 hover:bg-foreground hover:text-white rounded size-[20px] p-0"
+      disabled=""
     >
       <svg
         class="size-6"
