@@ -31,6 +31,8 @@ export default function KanbanBoard() {
         {columns.map((column, index) => (
           <ColumnContainer
             key={column}
+            columnIndex={index}
+            onAddTask={() => console.log("add task")}
             title={column}
             onDeleteColumn={() => console.log("delete column")}
             onEditTitle={(title) => console.log(title)}
