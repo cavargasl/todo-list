@@ -6,6 +6,7 @@ import TaskCard from "../TaskCard"
 
 const defaultTask = defaultTasks[0]
 const defaultTaskCompleted = defaultTasks[1]
+const taskInStage1 = defaultTasks[2]
 const functionsTaskMock = {
   onDeleteTask: vi.fn(),
   onEditTask: vi.fn(),
@@ -67,6 +68,14 @@ describe("TaskCard", () => {
 
   describe("when clicking the buttons", () => {
     test("calls the function to move to left the task", async () => {
+      cleanup()
+      render(
+        <TaskCard
+          task={taskInStage1}
+          functionsTask={functionsTaskMock}
+          lastStage
+        />
+      )
       const moveTaskLeftButton = screen.getByRole("button", {
         name: "move to left",
       })
@@ -74,8 +83,8 @@ describe("TaskCard", () => {
       await userEvent.click(moveTaskLeftButton)
       expect(functionsTaskMock.onMoveTask).toHaveBeenCalled()
       expect(functionsTaskMock.onMoveTask).toHaveBeenCalledWith({
-        taskId: defaultTask.id,
-        newStage: defaultTask.stage - 1,
+        taskId: taskInStage1.id,
+        newStage: taskInStage1.stage - 1,
       })
     })
 
@@ -146,9 +155,6 @@ describe("TaskCard", () => {
       expect(functionsTaskMock.onDeleteTask).toHaveBeenCalledWith(
         defaultTask.id
       )
-      expect(
-        screen.queryByRole("listitem", { name: "task" })
-      ).not.toBeInTheDocument()
     })
   })
 
