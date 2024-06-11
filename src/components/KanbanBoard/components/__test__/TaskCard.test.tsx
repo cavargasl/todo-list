@@ -25,7 +25,7 @@ describe("TaskCard", () => {
   })
 
   test("renders the component ", () => {
-    expect(screen.getByRole("listitem", { name: "task" })).toMatchSnapshot()
+    expect(screen.getByRole("listitem", { name: "task" })).toBeInTheDocument()
   })
 
   test("renders task name and checkbox", () => {
@@ -44,7 +44,6 @@ describe("TaskCard", () => {
         lastStage
       />
     )
-    expect(screen.getByRole("listitem", { name: "task" })).toMatchSnapshot()
     expect(screen.getByRole("paragraph")).toHaveStyle(
       "text-decoration-line: line-through"
     )

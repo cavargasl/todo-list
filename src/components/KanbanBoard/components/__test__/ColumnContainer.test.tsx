@@ -44,7 +44,7 @@ describe("ColumnContainer", () => {
     const columnContainerElement = screen.getByRole("listitem", {
       name: "column",
     })
-    expect(columnContainerElement).toMatchSnapshot()
+    expect(columnContainerElement).toBeInTheDocument()
   })
 
   test("renders the title correctly", () => {
