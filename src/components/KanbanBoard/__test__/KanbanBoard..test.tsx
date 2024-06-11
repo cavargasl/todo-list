@@ -21,16 +21,53 @@ describe("KanbanBoard", () => {
     })
   })
 
-  test("hide the column when the delete button is clicked", async () => {
-    const columnContainers = screen.getAllByLabelText("delete column")
-    expect(columnContainers.length).toBe(defaultColumns.length)
-    const deleteColumnButton = screen.getAllByRole("button", {
-      name: /delete column/i,
-    })[1]
-    await userEvent.click(deleteColumnButton)
-    const columnContainersAfterDelete = screen.getAllByLabelText("column")
-    expect(columnContainersAfterDelete.length).toBe(defaultColumns.length - 1)
-    expect(screen.queryByText(defaultColumns[1])).not.toBeInTheDocument()
+  test("show the new column title when edit title", async () => {
+    const column = screen.getAllByLabelText("column")[0]
+    const { getByText, getByRole } = within(column)
+    await userEvent.click(getByText(defaultColumns[0]))
+    const inputEditTitle = getByRole("textbox", {
+      name: "Edit column title",
+    })
+    expect(inputEditTitle).toBeInTheDocument()
+    await userEvent.type(inputEditTitle, "New title{enter}", {
+      initialSelectionStart: 0,
+      initialSelectionEnd: 11,
+    })
+    expect(screen.getByText("New title")).toBeInTheDocument()
+  })
+
+  describe("when the delete button from column is clicked", () => {
+    test("hide the column", async () => {
+      const columnContainers = screen.getAllByLabelText("delete column")
+      expect(columnContainers.length).toBe(defaultColumns.length)
+      const deleteColumnButton = screen.getAllByRole("button", {
+        name: /delete column/i,
+      })[1]
+      await userEvent.click(deleteColumnButton)
+      const columnContainersAfterDelete = screen.getAllByLabelText("column")
+      expect(columnContainersAfterDelete.length).toBe(defaultColumns.length - 1)
+      expect(screen.queryByText(defaultColumns[1])).not.toBeInTheDocument()
+    })
+    test("delete tasks into the column", async () => {
+      const columnElement = screen.getAllByLabelText("column")[0]
+      const { getAllByRole, getByRole } = within(columnElement)
+      const tasksElements = getAllByRole("listitem", { name: "task" })
+      expect(tasksElements.length).toBe(
+        defaultTasks.filter((task) => task.stage === 0).length
+      )
+      const deleteColumnButton = getByRole("button", {
+        name: /delete column/i,
+      })
+      await userEvent.click(deleteColumnButton)
+      const columnContainersAfterDelete = screen.getAllByLabelText("column")
+      expect(columnContainersAfterDelete.length).toBe(defaultColumns.length - 1)
+      for (const task of defaultTasks.filter((task) => task.stage === 0)) {
+        expect(screen.queryByText(task.name)).not.toBeInTheDocument()
+      }
+      for (const task of defaultTasks.filter((task) => task.stage !== 0)) {
+        expect(screen.queryByText(task.name)).toBeInTheDocument()
+      }
+    })
   })
 
   test("renders a button to add a new column", () => {
@@ -182,10 +219,28 @@ describe("KanbanBoard", () => {
           screen.getByRole("button", { name: /Add column/i })
         ).toBeInTheDocument()
       })
+      test("renders the new column", async () => {
+        const inputElement = screen.getByPlaceholderText("Enter column title")
+        await userEvent.type(inputElement, "New Column{enter}")
+        const columnContainers = screen.getAllByLabelText("column")
+        expect(columnContainers.length).toBe(defaultColumns.length + 1)
+        expect(screen.getByText("New Column")).toBeInTheDocument()
+      })
+      test("dismiss the new column when the input is empty", async () => {
+        const inputElement = screen.getByPlaceholderText("Enter column title")
+        await userEvent.type(inputElement, "{enter}")
+        const columnContainers = screen.getAllByLabelText("column")
+        expect(columnContainers.length).toBe(defaultColumns.length)
+      })
+      test("dismiss the new column when is repeated", async () => {
+        const inputElement = screen.getByPlaceholderText("Enter column title")
+        await userEvent.type(inputElement, "To do{enter}")
+        const columnContainers = screen.getAllByLabelText("column")
+        expect(columnContainers.length).toBe(defaultColumns.length)
+      })
       test("renders a new column container", async () => {
         const inputElement = screen.getByPlaceholderText("Enter column title")
-        await userEvent.type(inputElement, "New Column")
-        await userEvent.type(inputElement, "{enter}")
+        await userEvent.type(inputElement, "New Column{enter}")
         const columnContainers = screen.getAllByLabelText("column")
         expect(columnContainers.length).toBe(defaultColumns.length + 1)
         expect(screen.getByText("New Column")).toBeInTheDocument()
@@ -263,6 +318,87 @@ describe("KanbanBoard", () => {
         const columnContainers = screen.getAllByLabelText("column")
         expect(columnContainers.length).toBe(defaultColumns.length)
         expect(screen.queryByText("New Column")).not.toBeInTheDocument()
+      })
+    })
+  })
+
+  describe("when the 'Add task' button is clicked", () => {
+    beforeEach(async () => {
+      const addTaskButton = screen.getAllByRole("button", {
+        name: /Add item/i,
+      })[1]
+      await userEvent.click(addTaskButton)
+    })
+
+    describe("when the 'Enter' key is pressed in the input", () => {
+      test("hides the input", async () => {
+        const inputElement = screen.getByPlaceholderText("Enter item")
+        await userEvent.type(inputElement, "New Task")
+        expect(inputElement).toHaveValue("New Task")
+        await userEvent.type(inputElement, "{enter}")
+        expect(inputElement).not.toBeInTheDocument()
+      })
+      test("shows the 'Add task' button", async () => {
+        const inputElement = screen.getByPlaceholderText("Enter item")
+        await userEvent.type(inputElement, "New Task")
+        expect(inputElement).toHaveValue("New Task")
+        await userEvent.type(inputElement, "{enter}")
+        expect(
+          screen.getAllByRole("button", { name: /Add item/i })[1]
+        ).toBeInTheDocument()
+      })
+      test("renders a new task container", async () => {
+        const inputElement = screen.getByPlaceholderText("Enter item")
+        const columnElement = screen.getAllByLabelText("column")[1]
+        expect(within(columnElement).getAllByLabelText("task").length).toBe(1)
+        await userEvent.type(inputElement, "New Task{enter}")
+        expect(within(columnElement).getAllByLabelText("task").length).toBe(2)
+        expect(screen.getByText("New Task")).toBeInTheDocument()
+      })
+    })
+
+    describe("when the input is on blurred", () => {
+      test("hides the input on tab", async () => {
+        const inputElement = screen.getByPlaceholderText("Enter item")
+        await userEvent.type(inputElement, "New Task")
+        expect(inputElement).toHaveValue("New Task")
+        await userEvent.tab()
+        expect(inputElement).not.toBeInTheDocument()
+      })
+      test("hides the input on click outside the input", async () => {
+        const inputElement = screen.getByPlaceholderText("Enter item")
+        await userEvent.type(inputElement, "New Task")
+        expect(inputElement).toHaveValue("New Task")
+        await userEvent.click(document.body)
+        expect(inputElement).not.toBeInTheDocument()
+      })
+      test("shows the 'Add task' button", async () => {
+        const inputElement = screen.getByPlaceholderText("Enter item")
+        await userEvent.type(inputElement, "New Task")
+        expect(inputElement).toHaveValue("New Task")
+        await userEvent.tab()
+        expect(
+          screen.getAllByRole("button", { name: /Add item/i })[1]
+        ).toBeInTheDocument()
+        expect(screen.queryByText("New Task")).not.toBeInTheDocument()
+      })
+      test("shows the 'Add task' button on click outside the input", async () => {
+        const inputElement = screen.getByPlaceholderText("Enter item")
+        await userEvent.type(inputElement, "New Task")
+        expect(inputElement).toHaveValue("New Task")
+        await userEvent.click(document.body)
+        expect(
+          screen.getAllByRole("button", { name: /Add item/i })[1]
+        ).toBeInTheDocument()
+        expect(screen.queryByText("New Task")).not.toBeInTheDocument()
+      })
+      test("does not render a new task container", async () => {
+        const inputElement = screen.getByPlaceholderText("Enter item")
+        await userEvent.type(inputElement, "New Task")
+        await userEvent.tab()
+        const taskElements = screen.getAllByLabelText("task")
+        expect(taskElements.length).toBe(defaultTasks.length)
+        expect(screen.queryByText("New Task")).not.toBeInTheDocument()
       })
     })
   })

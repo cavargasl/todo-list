@@ -7,7 +7,9 @@ import TaskCard from "../TaskCard"
 
 const onDeleteColumnMock = vi.fn()
 const onEditTitleMock = vi.fn()
+const onAddTaskMock = vi.fn()
 const mockTitle = "Test Column"
+const mockColumnIndex = 0
 const functionsTaskMock = {
   onDeleteTask: vi.fn(),
   onEditTask: vi.fn(),
@@ -19,8 +21,10 @@ describe("ColumnContainer", () => {
     render(
       <ColumnContainer
         title={mockTitle}
+        columnIndex={mockColumnIndex}
         onDeleteColumn={onDeleteColumnMock}
         onEditTitle={onEditTitleMock}
+        onAddTask={onAddTaskMock}
       >
         <TaskCard
           task={defaultTasks[0]}
@@ -60,6 +64,24 @@ describe("ColumnContainer", () => {
     expect(addTaskButton).toBeInTheDocument()
   })
 
+  describe("when adding a new task", () => {
+    beforeEach(async () => {
+      const addTaskButton = screen.getByRole("button", { name: /add item/i })
+      await userEvent.click(addTaskButton)
+    })
+
+    test("renders an input to enter the task name", () => {
+      const inputElement = screen.getByPlaceholderText("Enter item")
+      expect(inputElement).toBeInTheDocument()
+    })
+
+    test("hides the 'Add task' button", () => {
+      expect(
+        screen.queryByRole("button", { name: /Add item/i })
+      ).not.toBeInTheDocument()
+    })
+  })
+
   test("renders the delete column button", () => {
     const deleteColumnButton = screen.getByRole("button", {
       name: /delete column/i,
@@ -88,8 +110,10 @@ describe("ColumnContainer", () => {
         initialSelectionEnd: 11,
       })
       expect(onEditTitleMock).toHaveBeenCalled()
-      expect(onEditTitleMock).toHaveBeenCalledWith("New title")
-      expect(screen.getByText("New title")).toBeInTheDocument()
+      expect(onEditTitleMock).toHaveBeenCalledWith({
+        title: "New title",
+        columnIndex: mockColumnIndex,
+      })
       expect(
         screen.queryByRole("textbox", { name: "Edit column title" })
       ).not.toBeInTheDocument()
@@ -105,10 +129,11 @@ describe("ColumnContainer", () => {
         initialSelectionEnd: 11,
       })
       expect(inputEditTitle).toHaveValue("cancel")
-      await userEvent.type(inputEditTitle, "{esc}")
+
+      await userEvent.type(inputEditTitle, "{escape}")
       expect(
         screen.queryByRole("textbox", { name: "Edit column title" })
-      ).not.toHaveValue("cancel")
+      ).not.toBeInTheDocument()
       expect(screen.getByText(mockTitle)).toBeInTheDocument()
     })
 
@@ -144,18 +169,6 @@ describe("ColumnContainer", () => {
       })
       await userEvent.click(deleteColumnButton)
       expect(onDeleteColumnMock).toHaveBeenCalledTimes(1)
-    })
-
-    test("delete the column container", async () => {
-      const columnContainerElement = screen.getByRole("listitem", {
-        name: "column",
-      })
-      expect(columnContainerElement).toBeInTheDocument()
-      const deleteColumnButton = screen.getByRole("button", {
-        name: /delete column/i,
-      })
-      await userEvent.click(deleteColumnButton)
-      expect(screen.queryByText(mockTitle)).not.toBeInTheDocument()
     })
   })
 })
