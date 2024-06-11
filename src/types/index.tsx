@@ -21,4 +21,5 @@ export type FunctionsTask = {
     taskId: Task["id"]
     newStage: Task["stage"]
   }) => void
+  onAddTask: (newTask: Task) => void
 }

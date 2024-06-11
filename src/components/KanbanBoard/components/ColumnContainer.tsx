@@ -1,26 +1,53 @@
 import { useState } from "react"
+import { type FunctionsTask } from "@/types"
 
 import Button from "@/components/ui/Button"
 import Input from "@/components/ui/Input"
 import PlusIcon from "@/components/icons/PlusIcon"
 import TrashIcon from "@/components/icons/TrashIcon"
 
+import { type FunctionsColumn } from "../hooks/useColumns"
+
 type Props = {
   title: string
   columnIndex: number
-  onDeleteColumn: () => void
-  onEditTitle: (title: string) => void
-  onAddTask: () => void
+  onDeleteColumn: FunctionsColumn["deleteColumn"]
+  onEditTitle: FunctionsColumn["editColumn"]
+  onAddTask: FunctionsTask["onAddTask"]
   children: React.ReactNode
 }
 
 export default function ColumnContainer({
   title,
+  columnIndex,
   onDeleteColumn,
+  onEditTitle,
+  onAddTask,
   children,
 }: Props) {
   const [editMode, setEditMode] = useState(false)
   const [addItem, setAddItem] = useState(false)
+
+  function keyPressHandler(e: React.KeyboardEvent<HTMLInputElement>) {
+    if (e.key === "Escape") return setEditMode(false)
+    if (e.key === "Enter") {
+      onEditTitle({ title: e.currentTarget.value, columnIndex })
+      setEditMode(false)
+    }
+  }
+
+  function handleAddItem(e: React.KeyboardEvent<HTMLInputElement>) {
+    if (e.key === "Enter") {
+      onAddTask({
+        name: e.currentTarget.value,
+        stage: columnIndex,
+        id: Math.random().toString(),
+        completed: false,
+      })
+      e.currentTarget.value = ""
+      setAddItem(false)
+    }
+  }
 
   return (
     <li
@@ -34,6 +61,7 @@ export default function ColumnContainer({
             aria-label="Edit column title"
             defaultValue={title}
             onBlur={() => setEditMode(false)}
+            onKeyDown={keyPressHandler}
             autoFocus
           />
         ) : (
@@ -44,7 +72,7 @@ export default function ColumnContainer({
         <Button
           variant={"ghost"}
           size={"icon"}
-          onClick={onDeleteColumn}
+          onClick={() => onDeleteColumn(columnIndex)}
           aria-label="delete column"
         >
           <TrashIcon />
@@ -64,7 +92,7 @@ export default function ColumnContainer({
           type="text"
           placeholder="Enter item"
           onBlur={() => setAddItem(false)}
-          onKeyDown={(e) => e.key === "Enter" && setAddItem(false)}
+          onKeyDown={handleAddItem}
           autoFocus
         />
       ) : (
