@@ -48,6 +48,20 @@ describe("KanbanBoard", () => {
       expect(columnContainersAfterDelete.length).toBe(defaultColumns.length - 1)
       expect(screen.queryByText(defaultColumns[1])).not.toBeInTheDocument()
     })
+    test("maintain the rest of the columns", async () => {
+      const columnContainers = screen.getAllByLabelText("column")
+      expect(columnContainers.length).toBe(defaultColumns.length)
+      const deleteColumnButton = screen.getAllByRole("button", {
+        name: /delete column/i,
+      })[0]
+      await userEvent.click(deleteColumnButton)
+      expect(screen.getAllByLabelText("column").length).toBe(
+        defaultColumns.length - 1
+      )
+      for (const column of defaultColumns.slice(1)) {
+        expect(screen.getByText(column)).toBeInTheDocument()
+      }
+    })
     test("delete tasks into the column", async () => {
       const columnElement = screen.getAllByLabelText("column")[0]
       const { getAllByRole, getByRole } = within(columnElement)
@@ -59,13 +73,32 @@ describe("KanbanBoard", () => {
         name: /delete column/i,
       })
       await userEvent.click(deleteColumnButton)
-      const columnContainersAfterDelete = screen.getAllByLabelText("column")
-      expect(columnContainersAfterDelete.length).toBe(defaultColumns.length - 1)
       for (const task of defaultTasks.filter((task) => task.stage === 0)) {
         expect(screen.queryByText(task.name)).not.toBeInTheDocument()
       }
-      for (const task of defaultTasks.filter((task) => task.stage !== 0)) {
-        expect(screen.queryByText(task.name)).toBeInTheDocument()
+    })
+    test("move tasks to the previous column", async () => {
+      const columnContainer = screen.getAllByLabelText("column")[0]
+      const { getAllByRole } = within(columnContainer)
+      const deleteColumnButton = getAllByRole("button", {
+        name: /delete column/i,
+      })[0]
+      await userEvent.click(deleteColumnButton)
+      const allColumnsAfterDelete = screen.getAllByLabelText("column")
+      for (let i = 0; i < allColumnsAfterDelete.length; i++) {
+        const columnElement = allColumnsAfterDelete[i]
+        const { getAllByRole } = within(columnElement)
+        const tasksElements = getAllByRole("listitem", { name: "task" })
+        expect(tasksElements.length).toBe(
+          defaultTasks.filter((task) => task.stage === i + 1).length
+        )
+        const tasksExpected = defaultTasks.filter(
+          (task) => task.stage === i + 1
+        )
+        for (let j = 0; j < tasksExpected.length; j++) {
+          const taskElement = tasksExpected[j]
+          expect(columnElement).toHaveTextContent(taskElement.name)
+        }
       }
     })
   })
